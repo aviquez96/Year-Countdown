@@ -1,9 +1,11 @@
 import React from 'react'
 import moment from 'moment'
+import Controls from './controls.js'
 
 class Countdown extends React.Component {
     state = {
-        duration: this.getRemaningTime()
+        duration: this.getRemaningTime(),
+        paused: false
     }
 
     getRemaningTime () {
@@ -38,7 +40,7 @@ class Countdown extends React.Component {
                         <h1 className="title">
                             New Year is coming up!
                         </h1>
-                        <div className="section">
+                        <section className="section">
                             <nav className="level">
                                 <div className="level-item has-text-centered">
                                     <div>
@@ -49,23 +51,24 @@ class Countdown extends React.Component {
                                 <div className="level-item has-text-centered">
                                     <div>
                                     <p className="heading">Hours</p>
-                                    <p className="title">{Math.floor(duration.hours().toString().padStart(2,'0'))}</p>
+                                    <p className="title">{Math.floor(duration.hours())}</p>
                                     </div>
                                 </div>
                                 <div className="level-item has-text-centered">
                                     <div>
                                     <p className="heading">Minutes</p>
-                                    <p className="title">{Math.floor(duration.minutes().toString().padStart(2,'0'))}</p>
+                                    <p className="title">{Math.floor(duration.minutes())}</p>
                                     </div>
                                 </div>
                                 <div className="level-item has-text-centered">
                                     <div>
                                     <p className="heading">Seconds</p>
-                                    <p className="title">{Math.floor(duration.seconds().toString().padStart(2,'0'))}</p>
+                                    <p className="title">{Math.floor(duration.seconds())}</p>
                                     </div>
                                 </div>
                             </nav>
-                        </div>
+                        </section>
+                        <Controls paused={this.state.paused}/>
                     </div>
                 </div>
             </section>
