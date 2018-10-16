@@ -14,6 +14,20 @@ class Countdown extends React.Component {
         return moment.duration(difference);
     } 
 
+    tick () {
+        this.setState ({
+            duration: this.getRemaningTime()
+        });
+    }
+
+    componentDidMount () {
+        this.interval = setInterval(() => this.tick(), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    
     render () {
         const duration = this.state.duration;
         
