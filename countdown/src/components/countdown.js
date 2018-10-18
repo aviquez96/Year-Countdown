@@ -3,6 +3,7 @@ import moment from 'moment'
 import Controls from './controls.js'
 
 class Countdown extends React.Component {
+
     state = {
         duration: this.getRemaningTime(),
         paused: false
@@ -28,6 +29,20 @@ class Countdown extends React.Component {
 
     componentWillUnmount() {
         clearInterval(this.interval);
+    }
+
+    handleToggle = () => {
+        this.setState ((prevState, props) => {
+            const paused = !prevState.paused
+            if (paused) {
+                clearInterval(this.interval);
+            } else {
+                this.interval = setInterval(() => this.tick(), 1000);
+            }
+            return {
+                paused
+            }
+        })
     }
     
     render () {
@@ -68,7 +83,7 @@ class Countdown extends React.Component {
                                 </div>
                             </nav>
                         </section>
-                        <Controls paused={this.state.paused}/>
+                        <Controls paused={this.state.paused} onToggle={this.handleToggle}/>
                     </div>
                 </div>
             </section>
