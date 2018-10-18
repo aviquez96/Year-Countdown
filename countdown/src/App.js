@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import Countdown from './components/countdown'
+import Countdown from './components/Countdown/index.js'
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Countdown />
-      </div>
+      <Countdown />
     );
   }
 }
