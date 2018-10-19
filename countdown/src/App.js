@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Countdown from './components/Countdown/index.js'
 
-
-class App extends Component {
-  render() {
-    return (
-      <Countdown />
-    );
-  }
+const App = (props) => {
+  return (
+    <Countdown />
+  );
 }
  
 export default App;
