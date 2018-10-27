@@ -6,21 +6,21 @@ import Datepicker from './datepicker.js'
 
 class Countdown extends React.Component {
     state = {
-        duration: this.getRemaningTime(),
+        currentDate: moment(),
+        nextDate: moment({year: moment().year() + 1}),
         paused: false
     }
 
     getRemaningTime () {
-        let now = moment();
-        let newYear = moment({year: now.year() + 1});
-        let difference = newYear.diff(now);
+        let {currentDate, nextDate} = this.state
+        let difference = nextDate.diff(currentDate);
 
         return moment.duration(difference);
     } 
 
     tick () {
         this.setState ({
-            duration: this.getRemaningTime()
+            currentDate: moment()
         });
     }
 
@@ -33,7 +33,7 @@ class Countdown extends React.Component {
     }
 
     // Having a method used by a child with the arrow function replaces the this.function = this.function.bind(this)
-    // as the context of "this" is still the one of the parent class, in this case, Countdown.
+    // as the context of "this" is still the one of the parent class, which is, in this case, Countdown.
     handleToggle = () =>  {
         this.setState ((prevState, props) => {
             const paused = !prevState.paused
@@ -55,8 +55,17 @@ class Countdown extends React.Component {
     resume () {
         this.interval = setInterval(() => this.tick(), 1000);
     }
+
+    handleDateReset = (nextDate) => {
+        this.setState({
+            nextDate: nextDate
+        })
+    }
     
     render () {
+        const {paused} = this.state,
+            duration = this.getRemaningTime();
+
         return (
             <section className="hero is-primary is-bold is-fullheight has-text-centered">
                 <div className="hero-body">
@@ -65,10 +74,10 @@ class Countdown extends React.Component {
                             New Year is coming up!
                         </h1>
                         <section className="section">
-                            <Timer duration={this.state.duration}/>
+                            <Timer duration={duration}/>
                         </section>
-                        <Datepicker />
-                        <Controls paused={this.state.paused} onToggle={this.handleToggle}/>
+                        <Datepicker onDateReset={this.handleDateReset}/>
+                        <Controls paused={paused} onToggle={this.handleToggle}/>
                     </div>
                 </div>
             </section>
